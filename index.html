@@ -2,463 +2,522 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Customer Information Sheet</title>
 
 <style>
-*{box-sizing:border-box}
-
-body{
-  font-family:Arial,sans-serif;
-  background:#eef2f7;
-  margin:0;
-  color:#222;
+* {
+  box-sizing: border-box;
 }
 
-header{
-  background:#173e68;
-  color:white;
-  padding:16px;
-  text-align:center;
+body {
+  margin: 0;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  background: #eef2f7;
+  color: #222;
 }
 
-.container{
-  max-width:900px;
-  margin:20px auto;
-  padding:15px;
+.container {
+  max-width: 850px;
+  margin: auto;
 }
 
-.form{
-  background:white;
-  padding:20px;
-  border-radius:8px;
+.form {
+  background: white;
+  padding: 22px;
+  border-radius: 8px;
+  margin-bottom: 20px;
 }
 
-.grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:13px;
+.form h2 {
+  text-align: center;
+  color: #173e68;
 }
 
-label{
-  font-weight:bold;
-  font-size:13px;
+.field {
+  margin-bottom: 14px;
 }
 
-input,textarea{
-  width:100%;
-  padding:10px;
-  border:1px solid #bbb;
-  border-radius:5px;
-  margin-top:5px;
-  font:inherit;
+.field label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
 }
 
-textarea{min-height:65px}
-.full{grid-column:1/-1}
-
-button{
-  padding:11px 18px;
-  border:0;
-  border-radius:5px;
-  background:#174f83;
-  color:white;
-  font-weight:bold;
-  margin:12px 5px 0 0;
-  cursor:pointer;
+.field input,
+.field textarea {
+  width: 100%;
+  padding: 11px;
+  border: 1px solid #bbb;
+  border-radius: 5px;
+  font-size: 15px;
 }
 
-.secondary{background:#64748b}
-
-#preview{
-  background:white;
-  margin-top:20px;
-  padding:25px;
-  border:1px solid #bbb;
+.field textarea {
+  min-height: 65px;
+  resize: vertical;
 }
 
-/* PRINT DESIGN */
-
-.print-header{
-  text-align:center;
-  margin-bottom:65px;
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
 }
 
-.print-header h2{
-  font-size:19px;
-  margin:0;
-  letter-spacing:1px;
+button {
+  border: none;
+  padding: 13px 20px;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  margin: 5px;
 }
 
-.print-header p{
-  font-size:10px;
-  margin:5px;
+.print-btn {
+  background: #173e68;
+  color: white;
 }
 
-.branch-section{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:25px;
-  margin:0 12px 45px;
-  font-size:11px;
+.reset-btn {
+  background: #ddd;
+  color: #222;
 }
 
-.branch-section p{
-  margin:5px 0;
+/* PRINT SHEET */
+
+.sheet {
+  background: white;
+  width: 210mm;
+  min-height: 297mm;
+  margin: 20px auto;
+  padding: 16mm;
+  box-shadow: 0 0 8px #bbb;
 }
 
-.section-title{
-  font-size:11px;
-  font-weight:bold;
-  margin:0 12px 20px;
+.notice {
+  text-align: center;
+  color: #a11;
+  font-size: 11px;
+  font-weight: bold;
+  border: 1px solid #a11;
+  padding: 7px;
+  letter-spacing: 1px;
+  margin-bottom: 15px;
 }
 
-.customer-details{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  column-gap:35px;
-  row-gap:17px;
-  margin:0 12px;
+.sheet-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  border-bottom: 2px solid #173e68;
+  padding-bottom: 14px;
+  text-align: center;
 }
 
-.detail{
-  font-size:11px;
-  min-height:22px;
+.logo {
+  width: 75px;
+  height: 75px;
+  object-fit: contain;
 }
 
-.detail b{
-  font-weight:normal;
-  display:block;
-  margin-bottom:5px;
+.bank-name {
+  font-size: 23px;
+  font-weight: bold;
+  color: #173e68;
 }
 
-.detail span{
-  font-weight:bold;
-  overflow-wrap:anywhere;
+.sheet-title {
+  font-size: 17px;
+  font-weight: bold;
+  margin-top: 8px;
 }
 
-.wide{grid-column:1/-1}
-
-.signature{
-  margin:100px 15px 0;
-  text-align:right;
-  font-size:11px;
+.branch {
+  text-align: center;
+  margin: 15px 0 22px;
+  line-height: 1.6;
+  font-size: 13px;
 }
 
-.signature-line{
-  display:inline-block;
-  width:155px;
-  border-top:1px solid #555;
-  padding-top:6px;
-  text-align:center;
+.section-title {
+  background: #e8eef5;
+  padding: 8px;
+  font-weight: bold;
+  border-left: 4px solid #173e68;
+  margin-bottom: 12px;
 }
 
-.website{
-  margin-top:90px;
-  text-align:center;
-  font-size:9px;
-  color:#555;
-  overflow-wrap:anywhere;
+.details {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 25px;
+  row-gap: 16px;
+  margin-bottom: 25px;
 }
 
-@media(max-width:600px){
-  .grid,.customer-details,.branch-section{
-    grid-template-columns:1fr;
+.detail {
+  border-bottom: 1px dotted #777;
+  padding-bottom: 7px;
+  min-height: 35px;
+  font-size: 13px;
+}
+
+.detail strong {
+  display: block;
+  color: #555;
+  font-size: 11px;
+  margin-bottom: 5px;
+}
+
+.address-detail {
+  grid-column: 1 / -1;
+}
+
+.signature-area {
+  margin-top: 65px;
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+}
+
+.signature {
+  width: 180px;
+  text-align: center;
+  border-top: 1px solid #222;
+  padding-top: 8px;
+  font-size: 12px;
+}
+
+.website {
+  text-align: center;
+  margin-top: 65px;
+  border-top: 1px solid #ccc;
+  padding-top: 10px;
+  font-size: 11px;
+  color: #555;
+}
+
+@media(max-width:600px) {
+  .grid {
+    grid-template-columns: 1fr;
   }
-  .full,.wide{grid-column:auto}
-}
 
-@page{
-  size:A4 portrait;
-  margin:15mm;
-}
-
-@media print{
-  body{background:white}
-  header,.form,.no-print{display:none!important}
-
-  .container{
-    margin:0;
-    padding:0;
-    max-width:none;
+  .sheet {
+    width: 100%;
+    min-height: 0;
+    padding: 18px;
   }
 
-  #preview{
-    border:0;
-    margin:0;
-    padding:10mm 5mm;
-    min-height:260mm;
-    page-break-inside:avoid;
+  .details {
+    grid-template-columns: 1fr 1fr;
   }
 
-  .print-header{margin-bottom:65px}
-  .branch-section{margin-bottom:45px}
+  .bank-name {
+    font-size: 18px;
+  }
+
+  .logo {
+    width: 55px;
+    height: 55px;
+  }
+}
+
+@page {
+  size: A4 portrait;
+  margin: 0;
+}
+
+@media print {
+  body {
+    background: white;
+    padding: 0;
+    margin: 0;
+  }
+
+  .form,
+  .no-print {
+    display: none !important;
+  }
+
+  .container {
+    width: 210mm;
+    margin: 0;
+  }
+
+  .sheet {
+    width: 210mm;
+    height: 297mm;
+    min-height: 297mm;
+    margin: 0;
+    padding: 15mm;
+    box-shadow: none;
+    page-break-after: avoid;
+  }
 }
 </style>
 </head>
 
 <body>
 
-<header>
-<h2>Customer Information Sheet</h2>
-<p>Print Management</p>
-</header>
-
 <div class="container">
 
-<div class="form">
-
-<h3>Customer Details Entry</h3>
+<div class="form no-print">
+<h2>Customer Information Entry</h2>
 
 <div class="grid">
 
-<div>
-<label>Bank Name</label>
-<input id="bank" value="Union Bank of India">
+<div class="field">
+<label>Customer Name</label>
+<input id="name" placeholder="Enter customer name">
 </div>
 
-<div>
-<label>Branch Name</label>
-<input id="branch" value="PULINDA">
+<div class="field">
+<label>Father / Guardian Name</label>
+<input id="father" placeholder="Optional">
 </div>
 
-<div>
-<label>Branch Address</label>
-<textarea id="branchaddress">AT AND POST PULINDA,
-DIST. MURSHIDABAD, WEST BENGAL - 742134</textarea>
+<div class="field">
+<label>Account Number</label>
+<input id="account" placeholder="Enter account number">
 </div>
 
-<div>
-<label>Branch Phone</label>
-<input id="phone" value="03482-232216">
+<div class="field">
+<label>CIF Number</label>
+<input id="cif" placeholder="Enter CIF number">
 </div>
 
-<div>
+<div class="field">
 <label>IFSC Code</label>
-<input id="ifsc">
+<input id="ifsc" placeholder="Enter IFSC">
 </div>
 
-<div>
+<div class="field">
+<label>Aadhaar Last 4 Digits Only</label>
+<input id="aadhaar" maxlength="4" inputmode="numeric" placeholder="1234">
+</div>
+
+<div class="field">
+<label>Mobile Last 4 Digits Only</label>
+<input id="mobile" maxlength="4" inputmode="numeric" placeholder="1234">
+</div>
+
+<div class="field">
+<label>Occupation</label>
+<input id="occupation" placeholder="Occupation">
+</div>
+
+<div class="field">
+<label>Account Balance (Optional)</label>
+<input id="balance" placeholder="Optional">
+</div>
+
+<div class="field">
+<label>PIN Code</label>
+<input id="pin" placeholder="PIN Code">
+</div>
+
+<div class="field">
 <label>State</label>
 <input id="state" value="WEST BENGAL">
 </div>
 
-<div>
+<div class="field">
 <label>Country</label>
 <input id="country" value="INDIA">
 </div>
 
-<div>
-<label>PIN Code</label>
-<input id="pin" maxlength="6" inputmode="numeric">
 </div>
 
-<div>
-<label>Customer Name</label>
-<input id="name">
-</div>
-
-<div>
-<label>Father / Guardian Name</label>
-<input id="father">
-</div>
-
-<div>
-<label>Account Number</label>
-<input id="account">
-</div>
-
-<div>
-<label>Customer ID / CIF</label>
-<input id="cif">
-</div>
-
-<div>
-<label>Aadhaar - Last 4 Digits Only</label>
-<input id="aadhaar" maxlength="4" inputmode="numeric">
-</div>
-
-<div>
-<label>Mobile - Last 4 Digits Only</label>
-<input id="mobile" maxlength="4" inputmode="numeric">
-</div>
-
-<div>
-<label>Occupation</label>
-<input id="occupation">
-</div>
-
-<div>
-<label>Opening Balance</label>
-<input id="balance">
-</div>
-
-<div class="full">
+<div class="field">
 <label>Customer Address</label>
-<textarea id="address"></textarea>
+<textarea id="address" placeholder="Enter full address"></textarea>
+</div>
+
+<div style="text-align:center">
+<button class="print-btn" onclick="makePrint()">Preview / Print</button>
+<button class="reset-btn" onclick="resetForm()">Reset</button>
 </div>
 
 </div>
 
-<button onclick="updatePreview()">Update Preview</button>
-<button onclick="window.print()">Print / Save PDF</button>
-<button class="secondary" onclick="clearForm()">Clear Form</button>
+<!-- PRINTABLE PERSONAL INFORMATION SHEET -->
 
+<div class="sheet" id="printSheet">
+
+<div class="notice">
+UNOFFICIAL – PERSONAL CUSTOMER INFORMATION SHEET
 </div>
 
-<!-- PRINT AREA -->
+<div class="sheet-header">
 
-<div id="preview">
-
-<div class="print-header">
-<h2 id="pbank">Union Bank of India</h2>
-<p>CUSTOMER INFORMATION SHEET</p>
-</div>
-
-<div class="branch-section">
+<img
+class="logo"
+src="WhatsApp%20Image%202026-11-16%20at%2012.22.44%20PM.jpg"
+alt="Uploaded image"
+onerror="this.style.display='none'">
 
 <div>
-<p><b>BRANCH</b></p>
-<p id="pbranch"></p>
-<p id="pbranchaddress"></p>
-<p id="pphone"></p>
+<div class="bank-name">UNION BANK OF INDIA</div>
+<div class="sheet-title">CUSTOMER INFORMATION SHEET</div>
 </div>
 
-<div>
-<p id="pstate"></p>
-<p id="pcountry"></p>
-<p id="ppin"></p>
-<p id="pifsc"></p>
 </div>
 
+<div class="branch">
+<strong>BRANCH: PULINDA</strong><br>
+AT AND POST PULINDA, DIST. MURSHIDABAD,<br>
+WEST BENGAL<br>
+Phone: 03482-232216
 </div>
 
 <div class="section-title">CUSTOMER DETAILS</div>
 
-<div class="customer-details" id="details"></div>
+<div class="details" id="details">
 
-<div class="signature">
-<div class="signature-line">
-Customer Acknowledgement
+<div class="detail" data-field="name">
+<strong>Customer Name</strong>
+<span id="p-name"></span>
 </div>
+
+<div class="detail" data-field="father">
+<strong>Father / Guardian Name</strong>
+<span id="p-father"></span>
+</div>
+
+<div class="detail" data-field="account">
+<strong>Account Number</strong>
+<span id="p-account"></span>
+</div>
+
+<div class="detail" data-field="cif">
+<strong>CIF Number</strong>
+<span id="p-cif"></span>
+</div>
+
+<div class="detail" data-field="ifsc">
+<strong>IFSC Code</strong>
+<span id="p-ifsc"></span>
+</div>
+
+<div class="detail" data-field="aadhaar">
+<strong>Aadhaar Number (Last 4 Digits)</strong>
+<span id="p-aadhaar"></span>
+</div>
+
+<div class="detail" data-field="mobile">
+<strong>Mobile Number (Last 4 Digits)</strong>
+<span id="p-mobile"></span>
+</div>
+
+<div class="detail" data-field="occupation">
+<strong>Occupation</strong>
+<span id="p-occupation"></span>
+</div>
+
+<div class="detail" data-field="balance">
+<strong>Account Balance</strong>
+<span id="p-balance"></span>
+</div>
+
+<div class="detail" data-field="pin">
+<strong>PIN Code</strong>
+<span id="p-pin"></span>
+</div>
+
+<div class="detail" data-field="state">
+<strong>State</strong>
+<span id="p-state"></span>
+</div>
+
+<div class="detail" data-field="country">
+<strong>Country</strong>
+<span id="p-country"></span>
+</div>
+
+<div class="detail address-detail" data-field="address">
+<strong>Customer Address</strong>
+<span id="p-address"></span>
+</div>
+
+</div>
+
+<div class="signature-area">
+<div class="signature">Customer Signature</div>
+<div class="signature">Date</div>
 </div>
 
 <div class="website">
-Website: <span id="pwebsite"></span>
+Personal record only – Not issued or verified by the bank.<br>
+Website: <span id="website"></span>
 </div>
 
 </div>
 </div>
 
 <script>
-
-const fields=[
-["Customer Name","name"],
-["Father / Guardian Name","father"],
-["Account Number","account"],
-["Customer ID / CIF","cif"],
-["Aadhaar Number","aadhaar"],
-["Mobile Number","mobile"],
-["Occupation","occupation"],
-["Opening Balance","balance"],
-["Customer Address","address"]
+const fields = [
+  "name",
+  "father",
+  "account",
+  "cif",
+  "ifsc",
+  "aadhaar",
+  "mobile",
+  "occupation",
+  "balance",
+  "pin",
+  "state",
+  "country",
+  "address"
 ];
 
-function get(id){
-return document.getElementById(id).value.trim();
+function makePrint() {
+
+  for (const field of fields) {
+    const input = document.getElementById(field);
+    const output = document.getElementById("p-" + field);
+    const box = document.querySelector(
+      '[data-field="' + field + '"]'
+    );
+
+    let value = input.value.trim();
+
+    if (field === "aadhaar" || field === "mobile") {
+      value = value.replace(/\D/g, "").slice(-4);
+    }
+
+    if (field === "aadhaar" && value) {
+      value = "XXXX XXXX " + value;
+    }
+
+    if (field === "mobile" && value) {
+      value = "******" + value;
+    }
+
+    output.textContent = value;
+
+    box.style.display = value ? "" : "none";
+  }
+
+  document.getElementById("website").textContent =
+    window.location.href;
+
+  window.print();
 }
 
-function safe(text){
-return text.replace(/[&<>"']/g,c=>({
-"&":"&amp;",
-"<":"&lt;",
-">":"&gt;",
-'"':"&quot;",
-"'":"&#39;"
-}[c]));
+function resetForm() {
+  if (confirm("Clear all customer information?")) {
+    fields.forEach(field => {
+      const input = document.getElementById(field);
+
+      if (field !== "state" && field !== "country") {
+        input.value = "";
+      }
+    });
+  }
 }
-
-function updatePreview(){
-
-document.getElementById("pbank").textContent=
-get("bank") || "Customer Information";
-
-document.getElementById("pbranch").textContent=
-get("branch");
-
-document.getElementById("pbranchaddress").innerHTML=
-safe(get("branchaddress")).replace(/\n/g,"<br>");
-
-document.getElementById("pphone").textContent=
-get("phone") ? "Branch Phone: "+get("phone") : "";
-
-document.getElementById("pstate").textContent=get("state");
-document.getElementById("pcountry").textContent=get("country");
-document.getElementById("ppin").textContent=
-get("pin") ? "PIN: "+get("pin") : "";
-
-document.getElementById("pifsc").textContent=
-get("ifsc") ? "IFSC: "+get("ifsc") : "";
-
-let html="";
-
-fields.forEach(([label,id])=>{
-
-let value=get(id);
-
-// Empty fields are hidden
-if(!value)return;
-
-// Privacy masking
-if(id==="aadhaar"){
-value="XXXX XXXX "+value;
-}
-
-if(id==="mobile"){
-value="******"+value;
-}
-
-html+=`
-<div class="detail ${id==="address"?"wide":""}">
-<b>${label}</b>
-<span>${safe(value).replace(/\n/g,"<br>")}</span>
-</div>`;
-
-});
-
-document.getElementById("details").innerHTML=html;
-
-document.getElementById("pwebsite").textContent=
-window.location.href;
-
-}
-
-["aadhaar","mobile"].forEach(id=>{
-document.getElementById(id).addEventListener("input",function(){
-this.value=this.value.replace(/\D/g,"").slice(0,4);
-});
-});
-
-function clearForm(){
-
-document.querySelectorAll(".form input,.form textarea")
-.forEach(el=>el.value="");
-
-document.getElementById("bank").value="Union Bank of India";
-document.getElementById("branch").value="PULINDA";
-
-document.getElementById("branchaddress").value=
-"AT AND POST PULINDA,\nDIST. MURSHIDABAD, WEST BENGAL - 742134";
-
-document.getElementById("phone").value="03482-232216";
-document.getElementById("state").value="WEST BENGAL";
-document.getElementById("country").value="INDIA";
-
-updatePreview();
-}
-
-updatePreview();
-
 </script>
 
 </body>
