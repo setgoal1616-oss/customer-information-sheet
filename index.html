@@ -98,7 +98,7 @@ button{
 .secondary{background:#64748b}
 .print-button{background:#16834a}
 
-/* PREVIEW */
+/* PREVIEW AREA */
 
 #preview{
   background:white;
@@ -130,7 +130,7 @@ button{
   font-size:9px;
   color:#8a2222;
   font-weight:bold;
-  margin-bottom:12mm;
+  margin-bottom:10mm;
 }
 
 .branch-section{
@@ -180,6 +180,11 @@ button{
   font-weight:normal;
   width:125px;
   flex-shrink:0;
+  white-space:nowrap;
+}
+
+.detail b::after{
+  content:" :";
 }
 
 .detail span{
@@ -188,6 +193,8 @@ button{
   overflow-wrap:anywhere;
   white-space:pre-line;
 }
+
+/* ACCOUNTANT SIGNATURE */
 
 .signature{
   margin-top:auto;
@@ -204,8 +211,10 @@ button{
   text-align:center;
 }
 
+/* WEBSITE AT BOTTOM */
+
 .website{
-  margin-top:8mm;
+  margin-top:18mm;
   text-align:center;
   font-size:8px;
   color:#555;
@@ -220,7 +229,7 @@ button{
   .account-prefix{font-size:11px}
 }
 
-/* A4 PRINT */
+/* A4 PRINT SETTINGS */
 
 @page{
   size:A4 portrait;
@@ -228,6 +237,7 @@ button{
 }
 
 @media print{
+
   html,body{
     width:210mm;
     height:297mm;
@@ -257,16 +267,14 @@ button{
 
   #preview{
     position:absolute;
-    top:0;
+    top:10mm;
     left:0;
     width:210mm;
-    height:297mm;
+    height:277mm;
     margin:0!important;
     padding:0!important;
     border:0!important;
-    display:flex!important;
-    align-items:center;
-    justify-content:center;
+    display:block!important;
     background:white;
   }
 
@@ -275,19 +283,24 @@ button{
     height:190mm;
     min-height:190mm;
     max-height:190mm;
-    padding:8mm 10mm;
-    margin:0;
+    padding:5mm 10mm;
+    margin:0 auto;
     overflow:hidden;
     border:0;
     page-break-inside:avoid;
   }
 
   .sheet-heading{
+    margin-top:0;
     font-size:17px;
   }
 
-  .branch-section{
+  .unofficial-note{
     margin-bottom:8mm;
+  }
+
+  .branch-section{
+    margin-bottom:7mm;
   }
 
   .signature{
@@ -295,7 +308,12 @@ button{
   }
 
   .website{
-    margin-top:7mm;
+    margin-top:18mm;
+  }
+
+  /* Hide Aadhaar and Mobile completely in print */
+  .private-row{
+    display:none!important;
   }
 }
 </style>
@@ -487,7 +505,7 @@ PERSONAL RECORD ONLY — NOT A BANK-ISSUED DOCUMENT
 
 <div class="signature">
 <div class="signature-line">
-Customer Signature
+Accountant / হিসাব রক্ষক
 </div>
 </div>
 
@@ -517,15 +535,15 @@ function onlyWords(input){
 /* CUSTOMER FIELDS */
 
 const fields=[
-["Account No.","accountLast4"],
-["Customer ID","cif"],
-["Name","name"],
-["Father / Guardian Name","father"],
-["Aadhaar (Last 4 Digits)","aadhaar"],
-["Mobile (Last 4 Digits)","mobile"],
-["Occupation","occupation"],
-["Opening Balance","balance"],
-["Address","address"]
+["Account No.","accountLast4",""],
+["Customer ID","cif",""],
+["Name","name",""],
+["Father / Guardian Name","father",""],
+["Aadhaar","aadhaar","private"],
+["Mobile","mobile","private"],
+["Occupation","occupation",""],
+["Opening Balance","balance",""],
+["Address","address",""]
 ];
 
 function get(id){
@@ -574,7 +592,7 @@ function updatePreview(){
 
   let html="";
 
-  fields.forEach(([label,id])=>{
+  fields.forEach(([label,id,type])=>{
 
     let value=get(id);
 
@@ -592,9 +610,11 @@ function updatePreview(){
       value="******"+value;
     }
 
+    let rowClass=type==="private" ? "private-row" : "";
+
     html+=`
-      <div class="detail">
-        <b>${label} :</b>
+      <div class="detail ${rowClass}">
+        <b>${label}</b>
         <span>${safe(value)}</span>
       </div>
     `;
