@@ -96,22 +96,11 @@ button{
 }
 
 .print-logo{
-  width:65px;
-  height:65px;
+  width:110px;
+  height:110px;
   object-fit:contain;
   display:block;
-  margin:0 auto 10px;
-}
-
-.print-header h2{
-  font-size:19px;
-  margin:0;
-  letter-spacing:1px;
-}
-
-.print-header p{
-  font-size:10px;
-  margin:5px;
+  margin:0 auto;
 }
 
 .branch-section{
@@ -339,11 +328,9 @@ UNOFFICIAL – PERSONAL CUSTOMER INFORMATION SHEET
 <img
 class="print-logo"
 src="WhatsApp%20Image%202026-11-16%20at%2012.22.44%20PM.jpg"
-alt="Uploaded logo"
+alt="Uploaded image"
 onerror="this.style.display='none'">
 
-<h2 id="pbank">Union Bank of India</h2>
-<p>CUSTOMER INFORMATION SHEET</p>
 </div>
 
 <div class="branch-section">
@@ -412,9 +399,6 @@ return text.replace(/[&<>"']/g,c=>({
 
 function updatePreview(){
 
-document.getElementById("pbank").textContent=
-get("bank") || "Customer Information";
-
 document.getElementById("pbranch").textContent=
 get("branch");
 
@@ -426,6 +410,7 @@ get("phone") ? "Branch Phone: "+get("phone") : "";
 
 document.getElementById("pstate").textContent=get("state");
 document.getElementById("pcountry").textContent=get("country");
+
 document.getElementById("ppin").textContent=
 get("pin") ? "PIN: "+get("pin") : "";
 
@@ -438,10 +423,8 @@ fields.forEach(([label,id])=>{
 
 let value=get(id);
 
-// Empty fields are hidden
 if(!value)return;
 
-// Privacy masking
 if(id==="aadhaar"){
 value="XXXX XXXX "+value;
 }
