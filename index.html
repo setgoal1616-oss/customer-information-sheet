@@ -126,7 +126,6 @@ button{
   margin:0 auto 5mm;
 }
 
-/* NOTICE */
 .notice{
   text-align:center;
   font-size:8px;
@@ -171,17 +170,22 @@ button{
   margin:0 5px;
 }
 
+/* FIXED CUSTOMER DETAIL TEXT OVERLAPPING */
+
 .detail{
   display:flex;
+  align-items:flex-start;
   font-size:12px;
-  line-height:1.5;
+  line-height:1.6;
+  min-height:20px;
 }
 
 .detail b{
   font-weight:normal;
   width:125px;
   flex-shrink:0;
-  white-space:nowrap;
+  white-space:normal;
+  line-height:1.6;
 }
 
 .detail b::after{
@@ -190,8 +194,11 @@ button{
 
 .detail span{
   flex:1;
+  min-width:0;
+  display:block;
   overflow-wrap:anywhere;
-  white-space:pre-line;
+  white-space:pre-wrap;
+  line-height:1.6;
 }
 
 .signature{
@@ -274,7 +281,8 @@ button{
     background:white;
   }
 
-  /* MAIN CONTENT: EXACTLY 190mm HEIGHT */
+  /* MAIN CONTENT 19 CM */
+
   .print-sheet{
     position:absolute;
     top:10mm;
@@ -290,21 +298,17 @@ button{
     page-break-inside:avoid;
   }
 
-  /* LOGO */
   .print-logo{
     height:55mm;
     margin-bottom:5mm;
-  }
-
-  .notice{
-    margin-bottom:7mm;
   }
 
   .signature{
     padding-top:8mm;
   }
 
-  /* WEBSITE AT VERY BOTTOM OF A4 */
+  /* WEBSITE AT BOTTOM */
+
   .website{
     position:absolute;
     top:286mm;
@@ -316,7 +320,8 @@ button{
     color:#555;
   }
 
-  /* NOTICE AT VERY TOP OF A4 */
+  /* DISCLAIMER AT TOP */
+
   .notice{
     position:fixed;
     top:2mm;
@@ -329,12 +334,12 @@ button{
     z-index:10;
   }
 
-  /* Hide duplicate notice inside main content */
   .print-sheet .notice{
     visibility:hidden;
   }
 
   /* Aadhaar and Mobile hidden in print */
+
   .private-row{
     display:none!important;
   }
@@ -458,8 +463,6 @@ CUSTOMER-PREPARED COPY — NOT BANK VERIFIED
 src="WhatsApp%20Image%202026-11-16%20at%2012.22.44%20PM.jpg"
 alt="Personal Logo">
 
-<!-- NOTICE POSITION RESERVED IN PRINT -->
-
 <div class="branch-section">
 
 <div class="branch-row">
@@ -505,6 +508,7 @@ Accountant / হিসাব রক্ষক
 Website: <span id="pwebsite"></span>
 </div>
 
+</div>
 </div>
 </div>
 
@@ -555,7 +559,8 @@ function updatePreview(){
     return false;
   }
 
-  /* CUSTOMER ID MUST BE 9 DIGITS */
+  /* CUSTOMER ID - EXACTLY 9 DIGITS */
+
   if(get("cif") && get("cif").length!==9){
     alert("Customer ID must be 9 digits.");
     return false;
