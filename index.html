@@ -54,7 +54,7 @@ input,textarea{
   font:inherit;
 }
 
-input[readonly]{
+input[readonly],textarea[readonly]{
   background:#e9edf2;
   color:#555;
   cursor:not-allowed;
@@ -62,6 +62,27 @@ input[readonly]{
 
 textarea{min-height:65px}
 .full{grid-column:1/-1}
+
+.account-input{
+  display:flex;
+  align-items:center;
+  gap:5px;
+  margin-top:5px;
+}
+
+.account-prefix{
+  padding:10px 7px;
+  border:1px solid #bbb;
+  border-radius:5px;
+  background:#e9edf2;
+  font-size:13px;
+  white-space:nowrap;
+}
+
+.account-input input{
+  margin-top:0;
+  min-width:0;
+}
 
 button{
   padding:11px 18px;
@@ -75,38 +96,56 @@ button{
 }
 
 .secondary{background:#64748b}
+.print-button{background:#16834a}
 
-/* PRINT AREA */
+/* PREVIEW */
 
 #preview{
   background:white;
   margin-top:20px;
-  padding:25px;
+  padding:20px;
   border:1px solid #bbb;
 }
 
-.print-logo{
-  display:block;
-  width:520px;
-  max-width:95%;
-  height:125px;
-  object-fit:contain;
-  margin:0 auto 65px;
+.print-sheet{
+  width:100%;
+  max-width:180mm;
+  min-height:190mm;
+  margin:auto;
+  padding:8mm 10mm;
+  display:flex;
+  flex-direction:column;
+  background:white;
+}
+
+.sheet-heading{
+  text-align:center;
+  font-size:17px;
+  font-weight:bold;
+  margin-bottom:5px;
+}
+
+.unofficial-note{
+  text-align:center;
+  font-size:9px;
+  color:#8a2222;
+  font-weight:bold;
+  margin-bottom:12mm;
 }
 
 .branch-section{
-  margin:0 12px 45px;
-  font-size:13px;
-  line-height:1.7;
+  margin:0 5px 8mm;
+  font-size:12px;
+  line-height:1.5;
 }
 
 .branch-row{
   display:flex;
-  margin-bottom:12px;
+  margin-bottom:5px;
 }
 
 .branch-label{
-  width:145px;
+  width:125px;
   flex-shrink:0;
 }
 
@@ -116,32 +155,30 @@ button{
   white-space:pre-line;
 }
 
-.ifsc-row{
-  margin-top:55px;
-}
-
 .section-title{
-  font-size:13px;
+  font-size:12px;
   font-weight:bold;
-  margin:0 12px 28px;
+  margin:0 5px 7mm;
+  border-bottom:1px solid #777;
+  padding-bottom:5px;
 }
 
 .customer-details{
   display:flex;
   flex-direction:column;
-  gap:18px;
-  margin:0 12px;
+  gap:8px;
+  margin:0 5px;
 }
 
 .detail{
   display:flex;
-  font-size:13px;
-  line-height:1.6;
+  font-size:12px;
+  line-height:1.5;
 }
 
 .detail b{
   font-weight:normal;
-  width:145px;
+  width:125px;
   flex-shrink:0;
 }
 
@@ -153,82 +190,113 @@ button{
 }
 
 .signature{
-  margin:auto 15px 0;
-  padding-top:110px;
+  margin-top:auto;
+  padding-top:12mm;
   text-align:right;
-  font-size:12px;
+  font-size:11px;
 }
 
 .signature-line{
   display:inline-block;
-  width:175px;
+  width:155px;
   border-top:1px solid #555;
-  padding-top:7px;
+  padding-top:6px;
   text-align:center;
 }
 
 .website{
-  margin-top:55px;
+  margin-top:8mm;
   text-align:center;
-  font-size:9px;
+  font-size:8px;
   color:#555;
   overflow-wrap:anywhere;
-}
-
-.unofficial-note{
-  margin-top:10px;
-  text-align:center;
-  font-size:9px;
-  color:#8a2222;
 }
 
 @media(max-width:600px){
   .grid{grid-template-columns:1fr}
   .full{grid-column:auto}
   .branch-row,.detail{font-size:11px}
-  .branch-label,.detail b{width:125px}
-  .print-logo{height:100px}
+  .branch-label,.detail b{width:115px}
+  .account-prefix{font-size:11px}
 }
+
+/* A4 PRINT */
 
 @page{
   size:A4 portrait;
-  margin:15mm;
+  margin:0;
 }
 
 @media print{
-  body{background:white}
+  html,body{
+    width:210mm;
+    height:297mm;
+    margin:0!important;
+    padding:0!important;
+    background:white;
+  }
+
+  body *{
+    visibility:hidden;
+  }
+
+  #preview,#preview *{
+    visibility:visible;
+  }
 
   header,.form,.no-print{
     display:none!important;
   }
 
   .container{
-    margin:0;
-    padding:0;
+    margin:0!important;
+    padding:0!important;
+    width:210mm;
     max-width:none;
   }
 
   #preview{
-    border:0;
+    position:absolute;
+    top:0;
+    left:0;
+    width:210mm;
+    height:297mm;
+    margin:0!important;
+    padding:0!important;
+    border:0!important;
+    display:flex!important;
+    align-items:center;
+    justify-content:center;
+    background:white;
+  }
+
+  .print-sheet{
+    width:180mm;
+    height:190mm;
+    min-height:190mm;
+    max-height:190mm;
+    padding:8mm 10mm;
     margin:0;
-    padding:5mm 3mm;
-    min-height:267mm;
-    height:267mm;
-    display:flex;
-    flex-direction:column;
+    overflow:hidden;
+    border:0;
     page-break-inside:avoid;
   }
 
-  .print-logo{
-    width:520px;
-    max-width:95%;
-    height:125px;
-    margin-bottom:65px;
+  .sheet-heading{
+    font-size:17px;
   }
 
-  .branch-section{margin-bottom:45px}
-  .signature{padding-top:0}
-  .website{margin-top:35px}
+  .branch-section{
+    margin-bottom:8mm;
+  }
+
+  .signature{
+    padding-top:10mm;
+  }
+
+  .website{
+    margin-top:7mm;
+  }
 }
 </style>
 </head>
@@ -264,7 +332,7 @@ readonly>
 
 <div>
 <label>Branch Address</label>
-<textarea id="branchaddress">AT AND PULINDA,
+<textarea id="branchaddress" readonly>AT AND PULINDA,
 DIST- MURSHIDABAD, WEST BENGAL, 742134</textarea>
 </div>
 
@@ -299,13 +367,16 @@ placeholder="Father / Guardian Name">
 </div>
 
 <div>
-<label>Account Number (15 Digits)</label>
-<input id="account"
+<label>Account Number</label>
+<div class="account-input">
+<span class="account-prefix">46840212000</span>
+<input id="accountLast4"
 type="text"
 inputmode="numeric"
-maxlength="15"
-oninput="onlyDigits(this,15)"
-placeholder="Enter 15 digits">
+maxlength="4"
+oninput="onlyDigits(this,4)"
+placeholder="Last 4 digits">
+</div>
 </div>
 
 <div>
@@ -362,9 +433,7 @@ placeholder="Customer Address"></textarea>
 </div>
 
 <button onclick="updatePreview()">Update Preview</button>
-
-<button onclick="window.print()">Print / Save PDF</button>
-
+<button class="print-button" onclick="printSheet()">Print / Save PDF</button>
 <button class="secondary" onclick="clearForm()">Clear Form</button>
 
 </div>
@@ -373,16 +442,25 @@ placeholder="Customer Address"></textarea>
 
 <div id="preview">
 
-<img
-class="print-logo"
-src="WhatsApp%20Image%202026-11-16%20at%2012.22.44%20PM.jpg"
-alt="Logo"
->
+<div class="print-sheet">
+
+<div class="sheet-heading">
+PERSONAL CUSTOMER INFORMATION
+</div>
+
+<div class="unofficial-note">
+PERSONAL RECORD ONLY — NOT A BANK-ISSUED DOCUMENT
+</div>
 
 <div class="branch-section">
 
 <div class="branch-row">
-<div class="branch-label">BRANCH :</div>
+<div class="branch-label">Bank Name:</div>
+<div class="branch-value" id="pbank"></div>
+</div>
+
+<div class="branch-row">
+<div class="branch-label">BRANCH:</div>
 <div class="branch-value" id="pbranch"></div>
 </div>
 
@@ -396,7 +474,7 @@ alt="Logo"
 <div class="branch-value" id="pphone"></div>
 </div>
 
-<div class="branch-row ifsc-row">
+<div class="branch-row">
 <div class="branch-label">IFSC Code:</div>
 <div class="branch-value" id="pifsc"></div>
 </div>
@@ -417,10 +495,7 @@ Customer Signature
 Website: <span id="pwebsite"></span>
 </div>
 
-<div class="unofficial-note">
-PERSONAL RECORD ONLY — NOT A BANK-ISSUED DOCUMENT
 </div>
-
 </div>
 </div>
 
@@ -436,13 +511,13 @@ function onlyDigits(input,maxLength){
 
 function onlyWords(input){
   input.value=input.value
-    .replace(/[^\p{L}\s]/gu,"");
+    .replace(/[^\p{L}\p{M}\s.'-]/gu,"");
 }
 
 /* CUSTOMER FIELDS */
 
 const fields=[
-["Account No.","account"],
+["Account No.","accountLast4"],
 ["Customer ID","cif"],
 ["Name","name"],
 ["Father / Guardian Name","father"],
@@ -471,37 +546,31 @@ function safe(text){
 
 function updatePreview(){
 
-  if(get("account") && get("account").length!==15){
-    alert("Account Number must be exactly 15 digits.");
-    return;
+  if(get("accountLast4") && get("accountLast4").length!==4){
+    alert("Account Number-এর শেষ ৪টি সংখ্যা লিখুন।");
+    return false;
   }
 
   if(get("cif") && get("cif").length!==8){
-    alert("Customer ID must be exactly 8 digits.");
-    return;
+    alert("Customer ID অবশ্যই ৮ সংখ্যার হতে হবে।");
+    return false;
   }
 
   if(get("aadhaar") && get("aadhaar").length!==4){
-    alert("Enter the last 4 Aadhaar digits.");
-    return;
+    alert("Aadhaar-এর শেষ ৪টি সংখ্যা লিখুন।");
+    return false;
   }
 
   if(get("mobile") && get("mobile").length!==4){
-    alert("Enter the last 4 Mobile digits.");
-    return;
+    alert("Mobile-এর শেষ ৪টি সংখ্যা লিখুন।");
+    return false;
   }
 
-  document.getElementById("pbranch").textContent=
-    get("branch");
-
-  document.getElementById("pbranchaddress").textContent=
-    get("branchaddress");
-
-  document.getElementById("pphone").textContent=
-    get("phone");
-
-  document.getElementById("pifsc").textContent=
-    get("ifsc");
+  document.getElementById("pbank").textContent=get("bank");
+  document.getElementById("pbranch").textContent=get("branch");
+  document.getElementById("pbranchaddress").textContent=get("branchaddress");
+  document.getElementById("pphone").textContent=get("phone");
+  document.getElementById("pifsc").textContent=get("ifsc");
 
   let html="";
 
@@ -510,6 +579,10 @@ function updatePreview(){
     let value=get(id);
 
     if(!value)return;
+
+    if(id==="accountLast4"){
+      value="46840212000"+value;
+    }
 
     if(id==="aadhaar"){
       value="XXXX XXXX "+value;
@@ -532,6 +605,16 @@ function updatePreview(){
 
   document.getElementById("pwebsite").textContent=
     window.location.href;
+
+  return true;
+}
+
+/* PRINT */
+
+function printSheet(){
+  if(updatePreview()){
+    window.print();
+  }
 }
 
 /* CLEAR FORM */
@@ -539,11 +622,8 @@ function updatePreview(){
 function clearForm(){
 
   document.querySelectorAll(
-    ".form input:not([readonly]),.form textarea"
+    ".form input:not([readonly]),.form textarea:not([readonly])"
   ).forEach(el=>el.value="");
-
-  document.getElementById("branchaddress").value=
-    "AT AND PULINDA,\nDIST- MURSHIDABAD, WEST BENGAL, 742134";
 
   updatePreview();
 }
