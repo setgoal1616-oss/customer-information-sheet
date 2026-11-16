@@ -107,6 +107,7 @@ button{
 .branch-value{
   flex:1;
   overflow-wrap:anywhere;
+  white-space:pre-line;
 }
 
 .ifsc-row{
@@ -142,10 +143,7 @@ button{
   font-weight:normal;
   flex:1;
   overflow-wrap:anywhere;
-}
-
-.wide{
-  display:flex;
+  white-space:pre-line;
 }
 
 .signature{
@@ -179,25 +177,13 @@ button{
 }
 
 @media(max-width:600px){
-  .grid{
-    grid-template-columns:1fr;
-  }
+  .grid{grid-template-columns:1fr}
+  .full{grid-column:auto}
 
-  .full{
-    grid-column:auto;
-  }
+  .branch-row,.detail{font-size:11px}
+  .branch-label,.detail b{width:125px}
 
-  .branch-row,.detail{
-    font-size:11px;
-  }
-
-  .branch-label,.detail b{
-    width:125px;
-  }
-
-  .print-logo{
-    height:100px;
-  }
+  .print-logo{height:100px}
 }
 
 @page{
@@ -206,9 +192,7 @@ button{
 }
 
 @media print{
-  body{
-    background:white;
-  }
+  body{background:white}
 
   header,.form,.no-print{
     display:none!important;
@@ -238,17 +222,9 @@ button{
     margin-bottom:65px;
   }
 
-  .branch-section{
-    margin-bottom:45px;
-  }
-
-  .signature{
-    padding-top:0;
-  }
-
-  .website{
-    margin-top:35px;
-  }
+  .branch-section{margin-bottom:45px}
+  .signature{padding-top:0}
+  .website{margin-top:35px}
 }
 </style>
 </head>
@@ -280,8 +256,8 @@ button{
 
 <div>
 <label>Branch Address</label>
-<textarea id="branchaddress">AT AND POST PULINDA,
-DIST. MURSHIDABAD, WEST BENGAL - 742134</textarea>
+<textarea id="branchaddress">AT AND PULINDA,
+DIST- MURSHIDABAD, WEST BENGAL, 742134</textarea>
 </div>
 
 <div>
@@ -291,22 +267,7 @@ DIST. MURSHIDABAD, WEST BENGAL - 742134</textarea>
 
 <div>
 <label>IFSC Code</label>
-<input id="ifsc">
-</div>
-
-<div>
-<label>State</label>
-<input id="state" value="WEST BENGAL">
-</div>
-
-<div>
-<label>Country</label>
-<input id="country" value="INDIA">
-</div>
-
-<div>
-<label>PIN Code</label>
-<input id="pin" maxlength="6" inputmode="numeric">
+<input id="ifsc" value="UBIN0546844">
 </div>
 
 <div>
@@ -394,21 +355,6 @@ onerror="this.style.display='none'">
 <div class="branch-value" id="pifsc"></div>
 </div>
 
-<div class="branch-row">
-<div class="branch-label">State:</div>
-<div class="branch-value" id="pstate"></div>
-</div>
-
-<div class="branch-row">
-<div class="branch-label">Country:</div>
-<div class="branch-value" id="pcountry"></div>
-</div>
-
-<div class="branch-row">
-<div class="branch-label">PIN Code:</div>
-<div class="branch-value" id="ppin"></div>
-</div>
-
 </div>
 
 <div class="section-title">CUSTOMER DETAILS</div>
@@ -465,23 +411,14 @@ function updatePreview(){
 document.getElementById("pbranch").textContent=
 get("branch");
 
-document.getElementById("pbranchaddress").innerHTML=
-safe(get("branchaddress")).replace(/\n/g,"<br>");
+document.getElementById("pbranchaddress").textContent=
+get("branchaddress");
 
 document.getElementById("pphone").textContent=
 get("phone");
 
 document.getElementById("pifsc").textContent=
 get("ifsc");
-
-document.getElementById("pstate").textContent=
-get("state");
-
-document.getElementById("pcountry").textContent=
-get("country");
-
-document.getElementById("ppin").textContent=
-get("pin");
 
 let html="";
 
@@ -502,7 +439,7 @@ value="******"+value;
 html+=`
 <div class="detail">
 <b>${label} :</b>
-<span>${safe(value).replace(/\n/g,"<br>")}</span>
+<span>${safe(value)}</span>
 </div>`;
 
 });
@@ -529,11 +466,10 @@ document.getElementById("bank").value="Union Bank of India";
 document.getElementById("branch").value="PULINDA";
 
 document.getElementById("branchaddress").value=
-"AT AND POST PULINDA,\nDIST. MURSHIDABAD, WEST BENGAL - 742134";
+"AT AND PULINDA,\nDIST- MURSHIDABAD, WEST BENGAL, 742134";
 
 document.getElementById("phone").value="03482-232216";
-document.getElementById("state").value="WEST BENGAL";
-document.getElementById("country").value="INDIA";
+document.getElementById("ifsc").value="UBIN0546844";
 
 updatePreview();
 }
