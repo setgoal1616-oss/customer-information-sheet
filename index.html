@@ -54,6 +54,12 @@ input,textarea{
   font:inherit;
 }
 
+input[readonly]{
+  background:#e9edf2;
+  color:#555;
+  cursor:not-allowed;
+}
+
 textarea{min-height:65px}
 .full{grid-column:1/-1}
 
@@ -179,10 +185,8 @@ button{
 @media(max-width:600px){
   .grid{grid-template-columns:1fr}
   .full{grid-column:auto}
-
   .branch-row,.detail{font-size:11px}
   .branch-label,.detail b{width:125px}
-
   .print-logo{height:100px}
 }
 
@@ -246,12 +250,16 @@ button{
 
 <div>
 <label>Bank Name</label>
-<input id="bank" value="Union Bank of India">
+<input id="bank"
+value="Union Bank of India"
+readonly>
 </div>
 
 <div>
 <label>Branch Name</label>
-<input id="branch" value="PULINDA">
+<input id="branch"
+value="PULINDA"
+readonly>
 </div>
 
 <div>
@@ -259,62 +267,104 @@ button{
 <textarea id="branchaddress">AT AND PULINDA,
 DIST- MURSHIDABAD, WEST BENGAL, 742134</textarea>
 </div>
+
 <div>
 <label>Branch Phone</label>
-<input id="phone" value="03482-232216">
+<input id="phone"
+value="03482-232216"
+readonly>
 </div>
+
 <div>
 <label>IFSC Code</label>
-<input id="ifsc" value="UBIN0546844">
+<input id="ifsc"
+value="UBIN0546844"
+readonly>
 </div>
+
 <div>
 <label>Customer Name</label>
-<input id="name">
+<input id="name"
+type="text"
+oninput="onlyWords(this)"
+placeholder="Customer Name">
 </div>
+
 <div>
 <label>Father / Guardian Name</label>
-<input id="father">
+<input id="father"
+type="text"
+oninput="onlyWords(this)"
+placeholder="Father / Guardian Name">
 </div>
 
 <div>
-<label>Account Number</label>
-<input id="account">
+<label>Account Number (15 Digits)</label>
+<input id="account"
+type="text"
+inputmode="numeric"
+maxlength="15"
+oninput="onlyDigits(this,15)"
+placeholder="Enter 15 digits">
 </div>
 
 <div>
-<label>Customer ID / CIF</label>
-<input id="cif">
+<label>Customer ID / CIF (8 Digits)</label>
+<input id="cif"
+type="text"
+inputmode="numeric"
+maxlength="8"
+oninput="onlyDigits(this,8)"
+placeholder="Enter 8 digits">
 </div>
 
 <div>
 <label>Aadhaar - Last 4 Digits Only</label>
-<input id="aadhaar" maxlength="4" inputmode="numeric">
+<input id="aadhaar"
+type="text"
+inputmode="numeric"
+maxlength="4"
+oninput="onlyDigits(this,4)"
+placeholder="Last 4 digits only">
 </div>
 
 <div>
 <label>Mobile - Last 4 Digits Only</label>
-<input id="mobile" maxlength="4" inputmode="numeric">
+<input id="mobile"
+type="text"
+inputmode="numeric"
+maxlength="4"
+oninput="onlyDigits(this,4)"
+placeholder="Last 4 digits only">
 </div>
 
 <div>
 <label>Occupation</label>
-<input id="occupation">
+<input id="occupation"
+type="text"
+oninput="onlyWords(this)"
+placeholder="Occupation">
 </div>
 
 <div>
 <label>Opening Balance</label>
-<input id="balance">
+<input id="balance"
+type="text"
+placeholder="Opening Balance">
 </div>
 
 <div class="full">
 <label>Customer Address</label>
-<textarea id="address"></textarea>
+<textarea id="address"
+placeholder="Customer Address"></textarea>
 </div>
 
 </div>
 
 <button onclick="updatePreview()">Update Preview</button>
+
 <button onclick="window.print()">Print / Save PDF</button>
+
 <button class="secondary" onclick="clearForm()">Clear Form</button>
 
 </div>
@@ -326,8 +376,8 @@ DIST- MURSHIDABAD, WEST BENGAL, 742134</textarea>
 <img
 class="print-logo"
 src="WhatsApp%20Image%202026-11-16%20at%2012.22.44%20PM.jpg"
-alt="Uploaded image"
-onerror="this.style.display='none'">
+alt="Logo"
+>
 
 <div class="branch-section">
 
@@ -376,6 +426,21 @@ PERSONAL RECORD ONLY — NOT A BANK-ISSUED DOCUMENT
 
 <script>
 
+/* INPUT VALIDATION */
+
+function onlyDigits(input,maxLength){
+  input.value=input.value
+    .replace(/[^0-9]/g,"")
+    .slice(0,maxLength);
+}
+
+function onlyWords(input){
+  input.value=input.value
+    .replace(/[^\p{L}\s]/gu,"");
+}
+
+/* CUSTOMER FIELDS */
+
 const fields=[
 ["Account No.","account"],
 ["Customer ID","cif"],
@@ -389,86 +454,101 @@ const fields=[
 ];
 
 function get(id){
-return document.getElementById(id).value.trim();
+  return document.getElementById(id).value.trim();
 }
 
 function safe(text){
-return text.replace(/[&<>"']/g,c=>({
-"&":"&amp;",
-"<":"&lt;",
-">":"&gt;",
-'"':"&quot;",
-"'":"&#39;"
-}[c]));
+  return text.replace(/[&<>"']/g,c=>({
+    "&":"&amp;",
+    "<":"&lt;",
+    ">":"&gt;",
+    '"':"&quot;",
+    "'":"&#39;"
+  }[c]));
 }
+
+/* UPDATE PREVIEW */
 
 function updatePreview(){
 
-document.getElementById("pbranch").textContent=
-get("branch");
+  if(get("account") && get("account").length!==15){
+    alert("Account Number must be exactly 15 digits.");
+    return;
+  }
 
-document.getElementById("pbranchaddress").textContent=
-get("branchaddress");
+  if(get("cif") && get("cif").length!==8){
+    alert("Customer ID must be exactly 8 digits.");
+    return;
+  }
 
-document.getElementById("pphone").textContent=
-get("phone");
+  if(get("aadhaar") && get("aadhaar").length!==4){
+    alert("Enter the last 4 Aadhaar digits.");
+    return;
+  }
 
-document.getElementById("pifsc").textContent=
-get("ifsc");
+  if(get("mobile") && get("mobile").length!==4){
+    alert("Enter the last 4 Mobile digits.");
+    return;
+  }
 
-let html="";
+  document.getElementById("pbranch").textContent=
+    get("branch");
 
-fields.forEach(([label,id])=>{
+  document.getElementById("pbranchaddress").textContent=
+    get("branchaddress");
 
-let value=get(id);
+  document.getElementById("pphone").textContent=
+    get("phone");
 
-if(!value)return;
+  document.getElementById("pifsc").textContent=
+    get("ifsc");
 
-if(id==="aadhaar"){
-value="XXXX XXXX "+value;
+  let html="";
+
+  fields.forEach(([label,id])=>{
+
+    let value=get(id);
+
+    if(!value)return;
+
+    if(id==="aadhaar"){
+      value="XXXX XXXX "+value;
+    }
+
+    if(id==="mobile"){
+      value="******"+value;
+    }
+
+    html+=`
+      <div class="detail">
+        <b>${label} :</b>
+        <span>${safe(value)}</span>
+      </div>
+    `;
+
+  });
+
+  document.getElementById("details").innerHTML=html;
+
+  document.getElementById("pwebsite").textContent=
+    window.location.href;
 }
 
-if(id==="mobile"){
-value="******"+value;
-}
-
-html+=`
-<div class="detail">
-<b>${label} :</b>
-<span>${safe(value)}</span>
-</div>`;
-
-});
-
-document.getElementById("details").innerHTML=html;
-
-document.getElementById("pwebsite").textContent=
-window.location.href;
-
-}
-
-["aadhaar","mobile"].forEach(id=>{
-document.getElementById(id).addEventListener("input",function(){
-this.value=this.value.replace(/\D/g,"").slice(0,4);
-});
-});
+/* CLEAR FORM */
 
 function clearForm(){
 
-document.querySelectorAll(".form input,.form textarea")
-.forEach(el=>el.value="");
+  document.querySelectorAll(
+    ".form input:not([readonly]),.form textarea"
+  ).forEach(el=>el.value="");
 
-document.getElementById("bank").value="Union Bank of India";
-document.getElementById("branch").value="PULINDA";
+  document.getElementById("branchaddress").value=
+    "AT AND PULINDA,\nDIST- MURSHIDABAD, WEST BENGAL, 742134";
 
-document.getElementById("branchaddress").value=
-"AT AND PULINDA,\nDIST- MURSHIDABAD, WEST BENGAL, 742134";
-
-document.getElementById("phone").value="03482-232216";
-document.getElementById("ifsc").value="UBIN0546844";
-
-updatePreview();
+  updatePreview();
 }
+
+/* INITIAL PREVIEW */
 
 updatePreview();
 
