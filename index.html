@@ -70,6 +70,8 @@ button{
 
 .secondary{background:#64748b}
 
+/* PRINT AREA */
+
 #preview{
   background:white;
   margin-top:20px;
@@ -77,103 +79,125 @@ button{
   border:1px solid #bbb;
 }
 
-/* PRINT DESIGN */
-
-.unofficial-note{
-  text-align:center;
-  color:#a00000;
-  border:1px solid #a00000;
-  padding:7px;
-  font-size:10px;
-  font-weight:bold;
-  margin-bottom:18px;
-  letter-spacing:.5px;
-}
-
-.print-header{
-  text-align:center;
-  margin-bottom:65px;
-}
-
 .print-logo{
-  width:110px;
-  height:110px;
-  object-fit:contain;
   display:block;
-  margin:0 auto;
+  width:520px;
+  max-width:95%;
+  height:125px;
+  object-fit:contain;
+  margin:0 auto 65px;
 }
 
 .branch-section{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:25px;
   margin:0 12px 45px;
-  font-size:11px;
+  font-size:13px;
+  line-height:1.7;
 }
 
-.branch-section p{
-  margin:5px 0;
+.branch-row{
+  display:flex;
+  margin-bottom:12px;
+}
+
+.branch-label{
+  width:145px;
+  flex-shrink:0;
+}
+
+.branch-value{
+  flex:1;
+  overflow-wrap:anywhere;
+}
+
+.ifsc-row{
+  margin-top:55px;
 }
 
 .section-title{
-  font-size:11px;
+  font-size:13px;
   font-weight:bold;
-  margin:0 12px 20px;
+  margin:0 12px 28px;
 }
 
 .customer-details{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  column-gap:35px;
-  row-gap:17px;
+  display:flex;
+  flex-direction:column;
+  gap:18px;
   margin:0 12px;
 }
 
 .detail{
-  font-size:11px;
-  min-height:22px;
+  display:flex;
+  font-size:13px;
+  line-height:1.6;
 }
 
 .detail b{
   font-weight:normal;
-  display:block;
-  margin-bottom:5px;
+  width:145px;
+  flex-shrink:0;
 }
 
 .detail span{
-  font-weight:bold;
+  font-weight:normal;
+  flex:1;
   overflow-wrap:anywhere;
 }
 
-.wide{grid-column:1/-1}
+.wide{
+  display:flex;
+}
 
 .signature{
-  margin:100px 15px 0;
+  margin:auto 15px 0;
+  padding-top:110px;
   text-align:right;
-  font-size:11px;
+  font-size:12px;
 }
 
 .signature-line{
   display:inline-block;
-  width:155px;
+  width:175px;
   border-top:1px solid #555;
-  padding-top:6px;
+  padding-top:7px;
   text-align:center;
 }
 
 .website{
-  margin-top:90px;
+  margin-top:55px;
   text-align:center;
   font-size:9px;
   color:#555;
   overflow-wrap:anywhere;
 }
 
+.unofficial-note{
+  margin-top:10px;
+  text-align:center;
+  font-size:9px;
+  color:#8a2222;
+}
+
 @media(max-width:600px){
-  .grid,.customer-details,.branch-section{
+  .grid{
     grid-template-columns:1fr;
   }
-  .full,.wide{grid-column:auto}
+
+  .full{
+    grid-column:auto;
+  }
+
+  .branch-row,.detail{
+    font-size:11px;
+  }
+
+  .branch-label,.detail b{
+    width:125px;
+  }
+
+  .print-logo{
+    height:100px;
+  }
 }
 
 @page{
@@ -182,8 +206,13 @@ button{
 }
 
 @media print{
-  body{background:white}
-  header,.form,.no-print{display:none!important}
+  body{
+    background:white;
+  }
+
+  header,.form,.no-print{
+    display:none!important;
+  }
 
   .container{
     margin:0;
@@ -194,13 +223,32 @@ button{
   #preview{
     border:0;
     margin:0;
-    padding:10mm 5mm;
-    min-height:260mm;
+    padding:5mm 3mm;
+    min-height:267mm;
+    height:267mm;
+    display:flex;
+    flex-direction:column;
     page-break-inside:avoid;
   }
 
-  .print-header{margin-bottom:65px}
-  .branch-section{margin-bottom:45px}
+  .print-logo{
+    width:520px;
+    max-width:95%;
+    height:125px;
+    margin-bottom:65px;
+  }
+
+  .branch-section{
+    margin-bottom:45px;
+  }
+
+  .signature{
+    padding-top:0;
+  }
+
+  .website{
+    margin-top:35px;
+  }
 }
 </style>
 </head>
@@ -318,35 +366,47 @@ DIST. MURSHIDABAD, WEST BENGAL - 742134</textarea>
 
 <div id="preview">
 
-<div class="unofficial-note">
-UNOFFICIAL – PERSONAL CUSTOMER INFORMATION SHEET
-<br>NOT ISSUED OR VERIFIED BY THE BANK
-</div>
-
-<div class="print-header">
-
 <img
 class="print-logo"
 src="WhatsApp%20Image%202026-11-16%20at%2012.22.44%20PM.jpg"
 alt="Uploaded image"
 onerror="this.style.display='none'">
 
-</div>
-
 <div class="branch-section">
 
-<div>
-<p><b>BRANCH</b></p>
-<p id="pbranch"></p>
-<p id="pbranchaddress"></p>
-<p id="pphone"></p>
+<div class="branch-row">
+<div class="branch-label">BRANCH :</div>
+<div class="branch-value" id="pbranch"></div>
 </div>
 
-<div>
-<p id="pstate"></p>
-<p id="pcountry"></p>
-<p id="ppin"></p>
-<p id="pifsc"></p>
+<div class="branch-row">
+<div class="branch-label">Branch Address:</div>
+<div class="branch-value" id="pbranchaddress"></div>
+</div>
+
+<div class="branch-row">
+<div class="branch-label">Branch Phone:</div>
+<div class="branch-value" id="pphone"></div>
+</div>
+
+<div class="branch-row ifsc-row">
+<div class="branch-label">IFSC Code:</div>
+<div class="branch-value" id="pifsc"></div>
+</div>
+
+<div class="branch-row">
+<div class="branch-label">State:</div>
+<div class="branch-value" id="pstate"></div>
+</div>
+
+<div class="branch-row">
+<div class="branch-label">Country:</div>
+<div class="branch-value" id="pcountry"></div>
+</div>
+
+<div class="branch-row">
+<div class="branch-label">PIN Code:</div>
+<div class="branch-value" id="ppin"></div>
 </div>
 
 </div>
@@ -357,13 +417,16 @@ onerror="this.style.display='none'">
 
 <div class="signature">
 <div class="signature-line">
-Customer Acknowledgement
+Customer Signature
 </div>
 </div>
 
 <div class="website">
-Personal record only – Not issued or verified by the bank.<br>
 Website: <span id="pwebsite"></span>
+</div>
+
+<div class="unofficial-note">
+PERSONAL RECORD ONLY — NOT A BANK-ISSUED DOCUMENT
 </div>
 
 </div>
@@ -372,15 +435,15 @@ Website: <span id="pwebsite"></span>
 <script>
 
 const fields=[
-["Customer Name","name"],
+["Account No.","account"],
+["Customer ID","cif"],
+["Name","name"],
 ["Father / Guardian Name","father"],
-["Account Number","account"],
-["Customer ID / CIF","cif"],
-["Aadhaar Number","aadhaar"],
-["Mobile Number","mobile"],
+["Aadhaar (Last 4 Digits)","aadhaar"],
+["Mobile (Last 4 Digits)","mobile"],
 ["Occupation","occupation"],
 ["Opening Balance","balance"],
-["Customer Address","address"]
+["Address","address"]
 ];
 
 function get(id){
@@ -406,16 +469,19 @@ document.getElementById("pbranchaddress").innerHTML=
 safe(get("branchaddress")).replace(/\n/g,"<br>");
 
 document.getElementById("pphone").textContent=
-get("phone") ? "Branch Phone: "+get("phone") : "";
-
-document.getElementById("pstate").textContent=get("state");
-document.getElementById("pcountry").textContent=get("country");
-
-document.getElementById("ppin").textContent=
-get("pin") ? "PIN: "+get("pin") : "";
+get("phone");
 
 document.getElementById("pifsc").textContent=
-get("ifsc") ? "IFSC: "+get("ifsc") : "";
+get("ifsc");
+
+document.getElementById("pstate").textContent=
+get("state");
+
+document.getElementById("pcountry").textContent=
+get("country");
+
+document.getElementById("ppin").textContent=
+get("pin");
 
 let html="";
 
@@ -434,8 +500,8 @@ value="******"+value;
 }
 
 html+=`
-<div class="detail ${id==="address"?"wide":""}">
-<b>${label}</b>
+<div class="detail">
+<b>${label} :</b>
 <span>${safe(value).replace(/\n/g,"<br>")}</span>
 </div>`;
 
