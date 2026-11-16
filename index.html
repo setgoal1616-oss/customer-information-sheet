@@ -2,600 +2,387 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Customer Information Sheet</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Personal Passbook Cover</title>
 
 <style>
-*{box-sizing:border-box}
-
-body{
-  font-family:Arial,sans-serif;
-  background:#eef2f7;
-  margin:0;
-  color:#222;
+* {
+    box-sizing: border-box;
 }
 
-header{
-  background:#173e68;
-  color:white;
-  padding:16px;
-  text-align:center;
+body {
+    margin: 0;
+    padding: 20px;
+    background: #eeeeee;
+    font-family: Arial, sans-serif;
 }
 
-.container{
-  max-width:900px;
-  margin:20px auto;
-  padding:15px;
+.editor {
+    max-width: 700px;
+    margin: auto;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
 }
 
-.form{
-  background:white;
-  padding:20px;
-  border-radius:8px;
+.editor h2 {
+    text-align: center;
 }
 
-.grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:13px;
+.editor label {
+    display: block;
+    margin-top: 12px;
+    font-weight: bold;
 }
 
-label{
-  font-weight:bold;
-  font-size:13px;
+.editor input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #aaa;
+    border-radius: 4px;
 }
 
-input,textarea{
-  width:100%;
-  padding:10px;
-  border:1px solid #bbb;
-  border-radius:5px;
-  margin-top:5px;
-  font:inherit;
+button {
+    padding: 12px 20px;
+    background: #064b8d;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    margin-top: 15px;
+    cursor: pointer;
 }
 
-input[readonly],textarea[readonly]{
-  background:#e9edf2;
-  color:#555;
+.preview {
+    width: 210mm;
+    height: 297mm;
+    background: white;
+    margin: 25px auto;
+    position: relative;
+    color: #000;
+    overflow: hidden;
 }
 
-textarea{min-height:65px}
-.full{grid-column:1/-1}
-
-.account-input{
-  display:flex;
-  align-items:center;
-  gap:5px;
-  margin-top:5px;
+/* Top Disclaimer */
+.disclaimer {
+    position: absolute;
+    top: 1mm;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    font-size: 9px;
+    font-weight: bold;
 }
 
-.account-prefix{
-  padding:10px 7px;
-  border:1px solid #bbb;
-  border-radius:5px;
-  background:#e9edf2;
-  font-size:13px;
-  white-space:nowrap;
+/* Main Content - 19 CM */
+.main-content {
+    position: absolute;
+    top: 12mm;
+    left: 10mm;
+    width: 190mm;
+    height: 190mm;
+    border: 1px solid #333;
+    padding: 5mm;
 }
 
-.account-input input{
-  margin-top:0;
-  min-width:0;
+/* Bank Logo */
+.logo {
+    text-align: center;
+    height: 25mm;
+    margin-bottom: 3mm;
 }
 
-button{
-  padding:11px 18px;
-  border:0;
-  border-radius:5px;
-  background:#174f83;
-  color:white;
-  font-weight:bold;
-  margin:12px 5px 0 0;
-  cursor:pointer;
+.logo img {
+    max-height: 23mm;
+    max-width: 65mm;
+    object-fit: contain;
 }
 
-.secondary{background:#64748b}
-.print-button{background:#16834a}
-
-/* PREVIEW */
-
-#preview{
-  background:white;
-  margin-top:20px;
-  padding:20px;
-  border:1px solid #bbb;
+/* Bank Name */
+.bank-name {
+    text-align: center;
+    font-size: 21px;
+    font-weight: bold;
+    margin: 4mm 0;
 }
 
-.print-sheet{
-  width:100%;
-  max-width:180mm;
-  height:190mm;
-  margin:auto;
-  padding:5mm 10mm;
-  display:flex;
-  flex-direction:column;
-  background:white;
+/* Customer Details */
+.details {
+    font-size: 13px;
+    line-height: 2;
 }
 
-.print-logo{
-  display:block;
-  width:520px;
-  max-width:95%;
-  height:55mm;
-  object-fit:contain;
-  margin:0 auto 5mm;
+.details div {
+    border-bottom: 1px dotted #888;
+    min-height: 10mm;
 }
 
-.notice{
-  text-align:center;
-  font-size:8px;
-  color:#8a2222;
-  margin-bottom:7mm;
+/* Signature */
+.signature-area {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20mm;
+    font-size: 12px;
 }
 
-.branch-section{
-  margin:0 5px 8mm;
-  font-size:12px;
-  line-height:1.5;
+/* Website at Bottom */
+.website {
+    position: absolute;
+    bottom: 1mm;
+    width: 100%;
+    text-align: center;
+    font-size: 10px;
+    font-weight: bold;
 }
 
-.branch-row{
-  display:flex;
-  margin-bottom:5px;
-}
+@media print {
+    @page {
+        size: A4 portrait;
+        margin: 0;
+    }
 
-.branch-label{
-  width:125px;
-  flex-shrink:0;
-}
+    html, body {
+        margin: 0;
+        padding: 0;
+        background: white;
+    }
 
-.branch-value{
-  flex:1;
-  overflow-wrap:anywhere;
-  white-space:pre-line;
-}
+    .editor {
+        display: none !important;
+    }
 
-.section-title{
-  font-size:12px;
-  font-weight:bold;
-  margin:0 5px 7mm;
-  border-bottom:1px solid #777;
-  padding-bottom:5px;
-}
-
-.customer-details{
-  display:flex;
-  flex-direction:column;
-  gap:8px;
-  margin:0 5px;
-}
-
-.detail{
-  display:flex;
-  font-size:12px;
-  line-height:1.5;
-}
-
-.detail b{
-  font-weight:normal;
-  width:125px;
-  flex-shrink:0;
-  white-space:nowrap;
-}
-
-.detail b::after{
-  content:" :";
-}
-
-.detail span{
-  flex:1;
-  overflow-wrap:anywhere;
-  white-space:pre-line;
-}
-
-.signature{
-  margin-top:auto;
-  padding-top:8mm;
-  text-align:right;
-  font-size:11px;
-}
-
-.signature-line{
-  display:inline-block;
-  width:155px;
-  border-top:1px solid #555;
-  padding-top:6px;
-  text-align:center;
-}
-
-.website{
-  margin-top:18mm;
-  text-align:center;
-  font-size:8px;
-  color:#555;
-  overflow-wrap:anywhere;
-}
-
-@media(max-width:600px){
-  .grid{grid-template-columns:1fr}
-  .full{grid-column:auto}
-  .branch-row,.detail{font-size:11px}
-  .branch-label,.detail b{width:115px}
-  .account-prefix{font-size:11px}
-}
-
-/* A4 PRINT */
-
-@page{
-  size:A4 portrait;
-  margin:0;
-}
-
-@media print{
-
-  html,body{
-    width:210mm;
-    height:297mm;
-    margin:0!important;
-    padding:0!important;
-    background:white;
-  }
-
-  body *{
-    visibility:hidden;
-  }
-
-  #preview,#preview *{
-    visibility:visible;
-  }
-
-  header,.form{
-    display:none!important;
-  }
-
-  .container{
-    margin:0!important;
-    padding:0!important;
-    width:210mm;
-    max-width:none;
-  }
-
-  #preview{
-    position:absolute;
-    top:0;
-    left:0;
-    width:210mm;
-    height:297mm;
-    margin:0!important;
-    padding:0!important;
-    border:0!important;
-    display:flex!important;
-    align-items:center;
-    justify-content:center;
-    background:white;
-  }
-
-  .print-sheet{
-    width:180mm;
-    height:190mm;
-    min-height:190mm;
-    max-height:190mm;
-    padding:5mm 10mm;
-    margin:0 auto;
-    overflow:hidden;
-    border:0;
-    page-break-inside:avoid;
-  }
-
-  .print-logo{
-    height:55mm;
-    margin-bottom:5mm;
-  }
-
-  .notice{
-    margin-bottom:7mm;
-  }
-
-  .signature{
-    padding-top:8mm;
-  }
-
-  .website{
-    margin-top:18mm;
-  }
-
-  /* Aadhaar and Mobile hidden in print */
-  .private-row{
-    display:none!important;
-  }
+    .preview {
+        margin: 0;
+        width: 210mm;
+        height: 297mm;
+        page-break-after: avoid;
+    }
 }
 </style>
 </head>
 
 <body>
 
-<header>
-<h2>Customer Information Sheet</h2>
-<p>Print Management</p>
-</header>
+<div class="editor">
 
-<div class="container">
+    <h2>Passbook Cover Generator</h2>
 
-<div class="form">
+    <label>Bank Logo Upload</label>
+    <input type="file" id="logoInput" accept="image/*">
 
-<h3>Customer Details Entry</h3>
+    <label>Account Holder Name</label>
+    <input id="holder" placeholder="Enter Name">
 
-<div class="grid">
+    <label>Father / Guardian Name</label>
+    <input id="father" placeholder="Enter Father / Guardian Name">
 
-<div>
-<label>Bank Name</label>
-<input id="bank" value="Union Bank of India" readonly>
-</div>
+    <label>Account Number (First 11 Digits)</label>
+    <input value="46840212000" readonly>
 
-<div>
-<label>Branch Name</label>
-<input id="branch" value="PULINDA" readonly>
-</div>
+    <label>Last 4 Digits</label>
+    <input
+        id="lastFour"
+        maxlength="4"
+        inputmode="numeric"
+        pattern="[0-9]{4}"
+        placeholder="Enter Last 4 Digits">
 
-<div>
-<label>Branch Address</label>
-<textarea id="branchaddress" readonly>AT AND PULINDA,
-DIST- MURSHIDABAD, WEST BENGAL, 742134</textarea>
-</div>
+    <label>Customer ID (9 Digits)</label>
+    <input
+        id="customerId"
+        maxlength="9"
+        inputmode="numeric"
+        pattern="[0-9]{9}"
+        placeholder="Enter 9 Digit Customer ID">
 
-<div>
-<label>Branch Phone</label>
-<input id="phone" value="03482-232216" readonly>
-</div>
+    <label>Branch Name</label>
+    <input id="branch" placeholder="Enter Branch">
 
-<div>
-<label>IFSC Code</label>
-<input id="ifsc" value="UBIN0546844" readonly>
-</div>
+    <label>IFSC Code</label>
+    <input id="ifsc" placeholder="Enter IFSC">
 
-<div>
-<label>Customer Name</label>
-<input id="name" oninput="onlyWords(this)" placeholder="Customer Name">
-</div>
+    <label>Website Link</label>
+    <input
+        id="websiteInput"
+        value="https://yourwebsite.com">
 
-<div>
-<label>Father / Guardian Name</label>
-<input id="father" oninput="onlyWords(this)" placeholder="Father / Guardian Name">
-</div>
+    <button onclick="updatePreview()">
+        Update Preview
+    </button>
 
-<div>
-<label>Account Number</label>
-<div class="account-input">
-<span class="account-prefix">46840212000</span>
-<input id="accountLast4"
-type="text" inputmode="numeric" maxlength="4"
-oninput="onlyDigits(this,4)" placeholder="Last 4 digits">
-</div>
-</div>
-
-<div>
-<label>Customer ID / CIF (9 Digits)</label>
-<input id="cif" inputmode="numeric" maxlength="9"
-oninput="onlyDigits(this,9)" placeholder="Enter 9 digits">
-</div>
-
-<div>
-<label>Aadhaar - Last 4 Digits Only</label>
-<input id="aadhaar" inputmode="numeric" maxlength="4"
-oninput="onlyDigits(this,4)" placeholder="Last 4 digits only">
-</div>
-
-<div>
-<label>Mobile - Last 4 Digits Only</label>
-<input id="mobile" inputmode="numeric" maxlength="4"
-oninput="onlyDigits(this,4)" placeholder="Last 4 digits only">
-</div>
-
-<div>
-<label>Occupation</label>
-<input id="occupation" oninput="onlyWords(this)" placeholder="Occupation">
-</div>
-
-<div>
-<label>Opening Balance</label>
-<input id="balance" placeholder="Opening Balance">
-</div>
-
-<div class="full">
-<label>Customer Address</label>
-<textarea id="address" placeholder="Customer Address"></textarea>
-</div>
+    <button onclick="window.print()">
+        Print A4
+    </button>
 
 </div>
 
-<button onclick="updatePreview()">Update Preview</button>
-<button class="print-button" onclick="printSheet()">Print / Save PDF</button>
-<button class="secondary" onclick="clearForm()">Clear Form</button>
+
+<!-- PRINT PAGE -->
+
+<div class="preview">
+
+    <!-- TOP DISCLAIMER -->
+    <div class="disclaimer">
+        CUSTOMER-PREPARED COPY — NOT BANK VERIFIED
+    </div>
+
+
+    <!-- MAIN CONTENT 19 CM -->
+    <div class="main-content">
+
+        <!-- BANK LOGO -->
+        <div class="logo">
+            <img id="bankLogo" src="" alt="Bank Logo">
+        </div>
+
+        <!-- BANK NAME -->
+        <div class="bank-name">
+            UNION BANK OF INDIA
+        </div>
+
+        <!-- CUSTOMER DETAILS -->
+        <div class="details">
+
+            <div>
+                Account Holder:
+                <span id="pHolder"></span>
+            </div>
+
+            <div>
+                Father / Guardian:
+                <span id="pFather"></span>
+            </div>
+
+            <div>
+                Account Number:
+                <span id="pAccount"></span>
+            </div>
+
+            <div>
+                Customer ID:
+                <span id="pCustomerId"></span>
+            </div>
+
+            <div>
+                Branch:
+                <span id="pBranch"></span>
+            </div>
+
+            <div>
+                IFSC Code:
+                <span id="pIfsc"></span>
+            </div>
+
+        </div>
+
+        <!-- SIGNATURE -->
+        <div class="signature-area">
+
+            <span>Customer Signature</span>
+
+            <span>হিসাব রক্ষক</span>
+
+        </div>
+
+    </div>
+
+
+    <!-- WEBSITE BOTTOM -->
+    <div class="website" id="pWebsite">
+        https://yourwebsite.com
+    </div>
 
 </div>
 
-<!-- PRINT AREA -->
-
-<div id="preview">
-<div class="print-sheet">
-
-<img class="print-logo"
-src="WhatsApp%20Image%202026-11-16%20at%2012.22.44%20PM.jpg"
-alt="Personal Logo">
-
-<div class="notice">
-CUSTOMER-PREPARED COPY — NOT BANK VERIFIED
-</div>
-
-<div class="branch-section">
-
-<div class="branch-row">
-<div class="branch-label">Bank Name:</div>
-<div class="branch-value" id="pbank"></div>
-</div>
-
-<div class="branch-row">
-<div class="branch-label">Branch:</div>
-<div class="branch-value" id="pbranch"></div>
-</div>
-
-<div class="branch-row">
-<div class="branch-label">Branch Address:</div>
-<div class="branch-value" id="pbranchaddress"></div>
-</div>
-
-<div class="branch-row">
-<div class="branch-label">Branch Phone:</div>
-<div class="branch-value" id="pphone"></div>
-</div>
-
-<div class="branch-row">
-<div class="branch-label">IFSC Code:</div>
-<div class="branch-value" id="pifsc"></div>
-</div>
-
-</div>
-
-<div class="section-title">CUSTOMER DETAILS</div>
-
-<div class="customer-details" id="details"></div>
-
-<div class="signature">
-<div class="signature-line">
-Accountant / হিসাব রক্ষক
-</div>
-</div>
-
-<div class="website">
-Website: <span id="pwebsite"></span>
-</div>
-
-</div>
-</div>
-</div>
 
 <script>
 
-/* VALIDATION */
+// Update Preview
+function updatePreview() {
 
-function onlyDigits(input,maxLength){
-  input.value=input.value.replace(/[^0-9]/g,"").slice(0,maxLength);
+    document.getElementById("pHolder").textContent =
+        document.getElementById("holder").value;
+
+    document.getElementById("pFather").textContent =
+        document.getElementById("father").value;
+
+    document.getElementById("pBranch").textContent =
+        document.getElementById("branch").value;
+
+    document.getElementById("pIfsc").textContent =
+        document.getElementById("ifsc").value;
+
+
+    // Account Number
+    const lastFour =
+        document.getElementById("lastFour").value;
+
+    document.getElementById("pAccount").textContent =
+        /^\d{4}$/.test(lastFour)
+        ? "46840212000" + lastFour
+        : "46840212000";
+
+
+    // Customer ID - Exactly 9 Digits
+    const customerId =
+        document.getElementById("customerId").value;
+
+    document.getElementById("pCustomerId").textContent =
+        /^\d{9}$/.test(customerId)
+        ? customerId
+        : "";
+
+
+    // Website Link
+    document.getElementById("pWebsite").textContent =
+        document.getElementById("websiteInput").value;
+
 }
 
-function onlyWords(input){
-  input.value=input.value.replace(/[^\p{L}\p{M}\s.'-]/gu,"");
-}
 
-function get(id){
-  return document.getElementById(id).value.trim();
-}
+// Logo Upload
+document.getElementById("logoInput").addEventListener(
+    "change",
+    function(event) {
 
-function safe(text){
-  return text.replace(/[&<>"']/g,c=>({
-    "&":"&amp;",
-    "<":"&lt;",
-    ">":"&gt;",
-    '"':"&quot;",
-    "'":"&#39;"
-  }[c]));
-}
+        const file = event.target.files[0];
 
-const fields=[
-  ["Account No.","accountLast4",""],
-  ["Customer ID","cif",""],
-  ["Name","name",""],
-  ["Father / Guardian Name","father",""],
-  ["Aadhaar","aadhaar","private"],
-  ["Mobile","mobile","private"],
-  ["Occupation","occupation",""],
-  ["Opening Balance","balance",""],
-  ["Address","address",""]
-];
+        if (file) {
 
-/* UPDATE PREVIEW */
+            const reader = new FileReader();
 
-function updatePreview(){
+            reader.onload = function(e) {
 
-  if(get("accountLast4") && get("accountLast4").length!==4){
-    alert("Enter the last 4 account digits.");
-    return false;
-  }
+                document.getElementById("bankLogo").src =
+                    e.target.result;
 
-  if(get("cif") && get("cif").length!==8){
-    alert("Customer ID must be 8 digits.");
-    return false;
-  }
+            };
 
-  if(get("aadhaar") && get("aadhaar").length!==4){
-    alert("Enter last 4 Aadhaar digits.");
-    return false;
-  }
+            reader.readAsDataURL(file);
 
-  if(get("mobile") && get("mobile").length!==4){
-    alert("Enter last 4 Mobile digits.");
-    return false;
-  }
+        }
 
-  document.getElementById("pbank").textContent=get("bank");
-  document.getElementById("pbranch").textContent=get("branch");
-  document.getElementById("pbranchaddress").textContent=get("branchaddress");
-  document.getElementById("pphone").textContent=get("phone");
-  document.getElementById("pifsc").textContent=get("ifsc");
-
-  let html="";
-
-  fields.forEach(([label,id,type])=>{
-
-    let value=get(id);
-    if(!value)return;
-
-    if(id==="accountLast4"){
-      value="46840212000"+value;
     }
+);
 
-    if(id==="aadhaar"){
-      value="XXXX XXXX "+value;
+
+// Allow Only Numbers
+document.getElementById("lastFour").addEventListener(
+    "input",
+    function() {
+        this.value = this.value.replace(/\D/g, "").slice(0, 4);
     }
+);
 
-    if(id==="mobile"){
-      value="******"+value;
+document.getElementById("customerId").addEventListener(
+    "input",
+    function() {
+        this.value = this.value.replace(/\D/g, "").slice(0, 9);
     }
+);
 
-    html+=`
-      <div class="detail ${type==="private"?"private-row":""}">
-        <b>${label}</b>
-        <span>${safe(value)}</span>
-      </div>
-    `;
-  });
 
-  document.getElementById("details").innerHTML=html;
-  document.getElementById("pwebsite").textContent=window.location.href;
-
-  return true;
-}
-
-/* PRINT */
-
-function printSheet(){
-  if(updatePreview()){
-    window.print();
-  }
-}
-
-/* CLEAR */
-
-function clearForm(){
-
-  document.querySelectorAll(
-    ".form input:not([readonly]),.form textarea:not([readonly])"
-  ).forEach(el=>el.value="");
-
-  updatePreview();
-}
-
-/* INITIAL PREVIEW */
-
+// Initial Preview
 updatePreview();
 
 </script>
