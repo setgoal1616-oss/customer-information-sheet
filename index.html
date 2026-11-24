@@ -307,6 +307,7 @@ button{
     padding-top:8mm;
   }
 
+  /* WEBSITE AT BOTTOM */
 
   .website{
     position:absolute;
@@ -516,6 +517,7 @@ oninput="onlyDigits(this,4)" placeholder="Last 4 digits only">
 <div id="preview">
 
 <div class="notice">
+CUSTOMER-PREPARED COPY — NOT BANK VERIFIED
 </div>
 
 <div class="print-sheet">
@@ -670,7 +672,8 @@ function updatePreview(){
     `;
   });
 
-  
+  document.getElementById("details").innerHTML=html;
+  document.getElementById("pwebsite").textContent=window.location.href;
 
   return true;
 }
@@ -700,7 +703,7 @@ updatePreview();
 
 /* LOGIN */
 const DEFAULT_LOGIN_ID = "admin";
-const DEFAULT_LOGIN_PASSWORD = "Deb@11";
+const DEFAULT_LOGIN_PASSWORD = "1234";
 
 function checkLogin(event){
   event.preventDefault();
