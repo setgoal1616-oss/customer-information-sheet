@@ -517,7 +517,7 @@ oninput="onlyDigits(this,4)" placeholder="Last 4 digits only">
 <div id="preview">
 
 <div class="notice">
-CUSTOMER-PREPARED COPY — NOT BANK VERIFIED
+
 </div>
 
 <div class="print-sheet">
@@ -567,9 +567,7 @@ Accountant / হিসাব রক্ষক
 
 </div>
 
-<div class="website">
-Website: <span id="pwebsite"></span>
-</div>
+
 
 </div>
 </div>
@@ -673,7 +671,6 @@ function updatePreview(){
   });
 
   document.getElementById("details").innerHTML=html;
-  document.getElementById("pwebsite").textContent=window.location.href;
 
   return true;
 }
@@ -703,7 +700,7 @@ updatePreview();
 
 /* LOGIN */
 const DEFAULT_LOGIN_ID = "admin";
-const DEFAULT_LOGIN_PASSWORD = "1234";
+const DEFAULT_LOGIN_PASSWORD = "Deb@11";
 
 function checkLogin(event){
   event.preventDefault();
