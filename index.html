@@ -370,6 +370,26 @@ button{
 #loginError{display:none;color:#b91c1c;text-align:center;margin-top:12px;font-size:13px}
 #appContent{display:none}
 
+
+.logout-button{
+  position:absolute;
+  top:14px;
+  right:16px;
+  margin:0;
+  padding:9px 14px;
+  background:#b42318;
+  color:white;
+  border:0;
+  border-radius:5px;
+  font-weight:bold;
+  cursor:pointer;
+}
+header{position:relative}
+@media(max-width:600px){
+  .logout-button{top:10px;right:10px;padding:7px 10px;font-size:12px}
+  header h2{padding-right:65px}
+}
+
 </style>
 </head>
 
@@ -394,6 +414,7 @@ button{
 <header>
 <h2>Customer Information Sheet</h2>
 <p>Print Management</p>
+<button class="logout-button" type="button" onclick="logout()">Logout</button>
 </header>
 
 <div class="container">
@@ -422,8 +443,7 @@ DIST- MURSHIDABAD, WEST BENGAL, 742134</textarea>
 
 <div>
 <label>Branch Phone</label>
-<input id="phone" value="03482-23221
-  6" readonly>
+<input id="phone" value="03482-232216" readonly>
 </div>
 
 <div>
@@ -683,7 +703,7 @@ updatePreview();
 
 /* LOGIN */
 const DEFAULT_LOGIN_ID = "admin";
-const DEFAULT_LOGIN_PASSWORD = "Deb@11";
+const DEFAULT_LOGIN_PASSWORD = "1234";
 
 function checkLogin(event){
   event.preventDefault();
@@ -706,6 +726,11 @@ function showMainPage(){
 
 if(sessionStorage.getItem("customerSheetLoggedIn") === "yes"){
   showMainPage();
+}
+
+function logout(){
+  sessionStorage.removeItem("customerSheetLoggedIn");
+  window.location.reload();
 }
 
 </script>
