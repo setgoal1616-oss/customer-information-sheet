@@ -344,11 +344,53 @@ button{
     display:none!important;
   }
 }
+
+/* LOGIN GATE */
+#loginScreen{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  background:#eef2f7;
+}
+#loginCard{
+  width:100%;
+  max-width:380px;
+  background:#fff;
+  padding:28px;
+  border-radius:10px;
+  box-shadow:0 8px 28px rgba(0,0,0,.12);
+}
+#loginCard h2{margin:0 0 8px;color:#173e68;text-align:center}
+#loginCard p{margin:0 0 20px;text-align:center;color:#64748b}
+#loginCard label{display:block;margin-top:12px;font-weight:bold;font-size:13px}
+#loginCard input{width:100%;padding:11px;border:1px solid #bbb;border-radius:5px;margin-top:5px;font:inherit}
+#loginCard button{width:100%;margin:18px 0 0;padding:12px;background:#174f83;color:#fff;border:0;border-radius:5px;font-weight:bold;cursor:pointer}
+#loginError{display:none;color:#b91c1c;text-align:center;margin-top:12px;font-size:13px}
+#appContent{display:none}
+
 </style>
 </head>
 
 <body>
 
+<div id="loginScreen">
+  <div id="loginCard">
+    <h2>Login</h2>
+    <p>Please sign in to continue</p>
+    <form onsubmit="return checkLogin(event)">
+      <label for="loginId">Login ID</label>
+      <input id="loginId" type="text" autocomplete="username" required placeholder="Enter login ID">
+      <label for="loginPassword">Password</label>
+      <input id="loginPassword" type="password" autocomplete="current-password" required placeholder="Enter password">
+      <button type="submit">Login</button>
+      <div id="loginError">Invalid Login ID or Password</div>
+    </form>
+  </div>
+</div>
+
+<div id="appContent">
 <header>
 <h2>Customer Information Sheet</h2>
 <p>Print Management</p>
@@ -638,7 +680,35 @@ function clearForm(){
 
 updatePreview();
 
+/* LOGIN */
+const DEFAULT_LOGIN_ID = "admin";
+const DEFAULT_LOGIN_PASSWORD = "1234";
+
+function checkLogin(event){
+  event.preventDefault();
+  const enteredId = document.getElementById("loginId").value.trim();
+  const enteredPassword = document.getElementById("loginPassword").value;
+
+  if(enteredId === DEFAULT_LOGIN_ID && enteredPassword === DEFAULT_LOGIN_PASSWORD){
+    sessionStorage.setItem("customerSheetLoggedIn", "yes");
+    showMainPage();
+  }else{
+    document.getElementById("loginError").style.display = "block";
+  }
+  return false;
+}
+
+function showMainPage(){
+  document.getElementById("loginScreen").style.display = "none";
+  document.getElementById("appContent").style.display = "block";
+}
+
+if(sessionStorage.getItem("customerSheetLoggedIn") === "yes"){
+  showMainPage();
+}
+
 </script>
 
+</div>
 </body>
 </html>
